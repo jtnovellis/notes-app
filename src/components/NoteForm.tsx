@@ -1,14 +1,24 @@
-import { FormEvent, useRef } from 'react';
+import { FormEvent, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import CreatableReactSelect from 'react-select/creatable';
+import { NoteData, Tag } from '../types';
 
-interface NoteFromProps {}
-export function NoteFrom({}: NoteFromProps) {
+interface NoteFromProps {
+  onSubmit: (data: NoteData) => void;
+}
+
+export function NoteFrom({ onSubmit }: NoteFromProps) {
   const titleRef = useRef<HTMLInputElement>(null);
   const bodyRef = useRef<HTMLTextAreaElement>(null);
+  const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
+    onSubmit({
+      title: titleRef.current!.value,
+      body: bodyRef.current!.value,
+      tags: [],
+    });
   }
 
   return (
@@ -30,7 +40,23 @@ export function NoteFrom({}: NoteFromProps) {
           <label htmlFor='title' className='text-gray-600 mb-2'>
             Tags
           </label>
-          <CreatableReactSelect isMulti />
+          <CreatableReactSelect
+            isMulti
+            value={selectedTags.map((tag) => ({
+              label: tag.label,
+              value: tag.id,
+            }))}
+            onChange={(tags) => {
+              setSelectedTags(
+                tags.map((tag) => {
+                  return {
+                    label: tag.label,
+                    id: tag.value,
+                  };
+                }),
+              );
+            }}
+          />
         </div>
       </div>
       <div className='flex flex-col'>
