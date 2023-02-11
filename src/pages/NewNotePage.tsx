@@ -1,10 +1,13 @@
 import { NoteFrom } from '../components/NoteForm';
+import { useNotes } from '../context';
 import { NoteData } from '../types';
 
 interface NewNotePageProps {}
 export function NewNotePage({}: NewNotePageProps) {
+  const { onCreateNote } = useNotes();
+
   function onSubmit(data: NoteData) {
-    alert(JSON.stringify(data, null, 2));
+    onCreateNote(data);
   }
 
   return (
