@@ -1,20 +1,24 @@
 import { FormEvent, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import CreatableReactSelect from 'react-select/creatable';
-import { NoteData, Tag } from '../types';
+import { Note, NoteData, Tag } from '../types';
 import { v4 as uuidv4 } from 'uuid';
 import { useNotes } from '../context';
 
-export function NoteFrom() {
-  const { onCreateNote, tags: availableTags, onAddTag } = useNotes();
+interface NoteFormProps {
+  note: Note;
+}
+
+export function EditFrom({ note }: NoteFormProps) {
+  const { tags: availableTags, onUpdateNote, onAddTag } = useNotes();
   const titleRef = useRef<HTMLInputElement>(null);
   const bodyRef = useRef<HTMLTextAreaElement>(null);
-  const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
+  const [selectedTags, setSelectedTags] = useState<Tag[]>(note.tags);
   const navigate = useNavigate();
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    onCreateNote({
+    onUpdateNote(note.id, {
       title: titleRef.current!.value,
       body: bodyRef.current!.value,
       tags: selectedTags,
@@ -31,6 +35,7 @@ export function NoteFrom() {
           </label>
           <input
             required
+            defaultValue={note.title}
             ref={titleRef}
             name='title'
             id='title'
@@ -74,6 +79,7 @@ export function NoteFrom() {
           Body
         </label>
         <textarea
+          defaultValue={note.body}
           data-provide='markdown'
           required
           name='body'

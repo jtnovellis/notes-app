@@ -1,6 +1,7 @@
 import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
 import { NoteLayout } from '../components/NoteLayout';
 import { NoteProvider } from '../context';
+import { EditPage } from '../pages/EditPage';
 import { HomePage } from '../pages/HomePage';
 import { NewNotePage } from '../pages/NewNotePage';
 import { NotePage } from '../pages/NotePage';
@@ -28,7 +29,7 @@ export const router = createBrowserRouter([
           },
           {
             path: 'edit',
-            element: <h1>Edit</h1>,
+            element: <EditPage />,
           },
         ],
       },
