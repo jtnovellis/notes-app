@@ -1,24 +1,25 @@
 import { FormEvent, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import CreatableReactSelect from 'react-select/creatable';
-import { NoteData, Tag } from '../types';
+import { Tag } from '../types';
+import { v4 as uuidv4 } from 'uuid';
+import { useNotes } from '../context';
 
-interface NoteFromProps {
-  onSubmit: (data: NoteData) => void;
-}
-
-export function NoteFrom({ onSubmit }: NoteFromProps) {
+export function NoteFrom() {
+  const { onAddTag, tags: availableTags, onCreateNote } = useNotes();
   const titleRef = useRef<HTMLInputElement>(null);
   const bodyRef = useRef<HTMLTextAreaElement>(null);
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
+  const navigate = useNavigate();
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    onSubmit({
+    onCreateNote({
       title: titleRef.current!.value,
       body: bodyRef.current!.value,
-      tags: [],
+      tags: selectedTags,
     });
+    navigate('..');
   }
 
   return (
@@ -29,6 +30,7 @@ export function NoteFrom({ onSubmit }: NoteFromProps) {
             Title
           </label>
           <input
+            required
             ref={titleRef}
             name='title'
             id='title'
@@ -41,6 +43,14 @@ export function NoteFrom({ onSubmit }: NoteFromProps) {
             Tags
           </label>
           <CreatableReactSelect
+            options={availableTags.map((tag) => {
+              return { label: tag.label, value: tag.id };
+            })}
+            onCreateOption={(label) => {
+              const newTag = { id: uuidv4(), label };
+              onAddTag(newTag);
+              setSelectedTags((prev) => [...prev, newTag]);
+            }}
             isMulti
             value={selectedTags.map((tag) => ({
               label: tag.label,
@@ -64,6 +74,7 @@ export function NoteFrom({ onSubmit }: NoteFromProps) {
           Body
         </label>
         <textarea
+          required
           name='body'
           id='body'
           ref={bodyRef}

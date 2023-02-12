@@ -1,7 +1,9 @@
 import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
+import { NoteLayout } from '../components/NoteLayout';
 import { NoteProvider } from '../context';
 import { HomePage } from '../pages/HomePage';
 import { NewNotePage } from '../pages/NewNotePage';
+import { NotePage } from '../pages/NotePage';
 
 export const router = createBrowserRouter([
   {
@@ -18,10 +20,11 @@ export const router = createBrowserRouter([
       },
       {
         path: '/:id',
+        element: <NoteLayout />,
         children: [
           {
             index: true,
-            element: <h1>Show Element</h1>,
+            element: <NotePage />,
           },
           {
             path: 'edit',
@@ -37,7 +40,7 @@ function RootLayout() {
   return (
     <>
       <header className='bg-purple-500 w-full h-20 mb-4' />
-      <main className='container mx-auto'>
+      <main className='container mx-auto px-4'>
         <NoteProvider>
           <Outlet />
         </NoteProvider>
