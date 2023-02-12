@@ -1,7 +1,7 @@
 import { FormEvent, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import CreatableReactSelect from 'react-select/creatable';
-import { Note, NoteData, Tag } from '../types';
+import { Note, Tag } from '../types';
 import { v4 as uuidv4 } from 'uuid';
 import { useNotes } from '../context';
 
