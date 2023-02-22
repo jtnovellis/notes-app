@@ -24,8 +24,8 @@ describe('HomePage', () => {
   });
 
   it('should not find notes when there is not exits', () => {
-    const shearch = screen.getByPlaceholderText(/Search a note/i);
-    userEvent.type(shearch, 'hello word');
+    const search = screen.getByPlaceholderText(/Search a note/i);
+    userEvent.type(search, 'hello word');
     expect(screen.queryByText(/hello word/i)).not.toBeInTheDocument();
   });
 });
