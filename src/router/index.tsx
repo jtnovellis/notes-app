@@ -37,7 +37,7 @@ export const router = createBrowserRouter([
   },
 ]);
 
-function RootLayout() {
+export function RootLayout() {
   return (
     <>
       <header className='bg-purple-500 w-full h-20 mb-4' />

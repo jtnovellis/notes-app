@@ -101,7 +101,7 @@ export function HomePage() {
                 className='bg-purple-500 hover:bg-purple-400 px-10 py-2 rounded-lg font-bold text-white'
                 type='submit'
               >
-                Create
+                Add Note
               </Link>
             </div>
           )}
