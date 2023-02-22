@@ -41,7 +41,7 @@ function RootLayout() {
   return (
     <>
       <header className='bg-purple-500 w-full h-20 mb-4' />
-      <main className='container mx-auto px-4'>
+      <main className='container mx-auto px-4 max-w-6xl'>
         <NoteProvider>
           <Outlet />
         </NoteProvider>

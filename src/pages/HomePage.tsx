@@ -89,9 +89,22 @@ export function HomePage() {
           </div>
         </form>
         <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3'>
-          {filteredNotes.map((note) => (
-            <NoteCard key={note.id} {...note} />
-          ))}
+          {filteredNotes.length > 0 ? (
+            filteredNotes.map((note) => <NoteCard key={note.id} {...note} />)
+          ) : (
+            <div className='col-span-3 flex flex-col items-center gap-14'>
+              <p className='text-center text-4xl text-gray-600 font-bold mt-10'>
+                There are not notes. Please add a note.
+              </p>
+              <Link
+                to='/new'
+                className='bg-purple-500 hover:bg-purple-400 px-10 py-2 rounded-lg font-bold text-white'
+                type='submit'
+              >
+                Create
+              </Link>
+            </div>
+          )}
         </div>
       </section>
       {showModal && <EditTagsModal onShowModal={handleShow} />}
