@@ -40,7 +40,7 @@ export function NotePage() {
       </div>
       <p>Tags:</p>
       <div className='flex flex-wrap gap-3 mb-10'>
-        {hasTags ? note.tags.map((tag) => <TagItem key={tag.id} {...tag} />) : <p>No Tags</p>}
+        {hasTags ? note.tags.map((tag) => <TagItem key={tag.id} {...tag} />) : <p className='font-bold'>No Tags</p>}
       </div>
       <ReactMarkdowm>{note.body}</ReactMarkdowm>
     </section>
